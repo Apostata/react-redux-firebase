@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,WAAW,CACV,MAAM,CAAE,MAAM,CACd,UAAU,CAAE,MAAM",
+"sources": ["_padrao.scss"],
+"names": [],
+"file": "_padrao.css"
+}
