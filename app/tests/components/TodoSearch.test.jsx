@@ -23,7 +23,7 @@ describe('TodoSearch',()=>{
 		expect(spy).toHaveBeenCalledWith(false, searchText);
 	});
 
-	it('Deve chamar o metodo handleSearchTodo quando clicar no checkbox "Mostrar tarefas já finalizdas"',()=>{
+	it('Deve chamar o metodo handleSearchTodo quando checkbox "Mostrar tarefas já finalizdas" for selecionado',()=>{
 		let spy = expect.createSpy();
 		let todoSearch = TestUtils.renderIntoDocument(<TodoSearch searchTodo={spy}/>);
 		
