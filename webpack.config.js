@@ -54,22 +54,20 @@ module.exports = {
   	//devtool: 'cheap-module-eval',
 
 	plugins: [
-	  // Minify assets.
+		new webpack.ProvidePlugin({
+			"$": 'jqeury',
+			"jQuery": 'jquery'
+		}),
 		/*new webpack.optimize.UglifyJsPlugin({
 		    compress: {
 		      warnings: false // https://github.com/webpack/webpack/issues/1496
 		    }
-		}),*/
+		}),
 
-		/*new webpack.DefinePlugin({
+		new webpack.DefinePlugin({
 	    	'process.env': {
 		      'NODE_ENV': JSON.stringify('production')
 		    }
-	  	}),*/
-
-		new webpack.ProvidePlugin({
-			"$": 'jqeury',
-			"jQuery": 'jquery'
-		})
+	  	})*/
 	]
 };
