@@ -1,0 +1,2 @@
+.todo{display:flex;cursor:pointer;align-items:center;padding:1rem;transition:background .3s ease}.todo p,.todo input{margin:0}.todo>:first-child{margin-right:1rem}.todo:hover{background:#f0f0f0}
+/*# sourceMappingURL=_todo.css.map */

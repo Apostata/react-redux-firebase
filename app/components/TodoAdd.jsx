@@ -17,7 +17,7 @@ export default class TodoAdd extends React.Component{
 
 	render(){
 		return(
-			<div>
+			<div className="container__footer">
 				<form onSubmit={this.onSubmit}>
 					<input type="text" ref='newTodo' placeholder="Qual será a próxima tarefa?"/>
 					<button className="button expanded">Adicionar</button>

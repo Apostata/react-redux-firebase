@@ -12,6 +12,8 @@ export default class Todo extends React.Component{
 	render(){
 		let {text, id, completed, createdAt, completedAt} = this.props;
 
+		let todoClassName = completed ? 'todo todo-completed' : 'todo';
+
 		let renderDate = ()=>{
 			let message = completed ? "Finalizada em:" : "Criado em :";
 			let timestamp = completed ? completedAt :createdAt;
@@ -20,10 +22,14 @@ export default class Todo extends React.Component{
 		};
 
 		return(
-			<div onClick={this.handleToggle}>
-				<input type="checkbox" checked={completed} readOnly/>
-				<p>{text}</p>
-				<p>{renderDate()}</p>
+			<div className={todoClassName} onClick={this.handleToggle}>
+				<div>
+					<input type="checkbox" checked={completed} readOnly/>
+				</div>
+				<div>
+					<p>{text}</p>
+					<p className="todo__subt">{renderDate()}</p>
+				</div>
 			</div>
 		)
 	}

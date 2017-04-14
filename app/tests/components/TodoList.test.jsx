@@ -31,4 +31,12 @@ describe('TodoList', ()=>{
 		expect(todosComponents.length).toBe(todos.length);
 	});
 
+	it('Deve renderizar mensagem quando não hover todos', ()=>{
+		let todos = [];
+
+		let todoList = TestUtils.renderIntoDocument(<TodoList todos={todos}/>);
+		let $el = jQuery(ReactDOM.findDOMNode(todoList));
+		expect($el.find('.container__message').length).toBe(1);
+	});
+
 });

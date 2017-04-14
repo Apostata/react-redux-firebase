@@ -1,0 +1,33 @@
+.container{
+	background: $light-gray;
+	border: 1px solid darken($light-gray, 25%);
+	border-radius: 5px;
+	padding: 0;
+	margin-bottom: 2rem;
+}
+
+.container__header{
+	border-bottom: 1px solid darken($light-gray, 25%);
+	padding: 1rem;
+
+	label{
+		cursor: pointer;
+		font-size: 1rem;
+	}
+
+	>:last-child{
+		display: flex;
+		align-items: center;
+	}
+}
+
+.container__footer{
+	padding: 1rem 1rem 0 1rem;
+	boder-top: 1px solid darken($light-gray, 25%);
+}
+
+.container__message{
+	color: $light-color;
+	margin: 2rem 0;
+	text-align: center;
+}
