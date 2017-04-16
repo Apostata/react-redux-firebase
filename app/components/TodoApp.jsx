@@ -39,21 +39,6 @@ export default class TodoApp extends React.Component{
 		});
 	}
 
-	handleTodoToggle = (id)=>{
-		let updatedTodos = this.state.todos.map((todo)=>{
-			if(todo.id === id){
-				todo.completed = !todo.completed;
-				todo.completedAt = todo.completed ? moment().unix() : undefined;
-			}
-
-			return todo;
-		});
-
-		this.setState({
-			todos:updatedTodos
-		});
-	}
-
 	handleSearchTodo = (isCompleted, searchedTodo)=>{
 		//console.log(searchedTodo);
 		this.setState({
@@ -72,7 +57,7 @@ export default class TodoApp extends React.Component{
 					<div className="column small-centered small-11 medium-6 large-5">
 						<div className="container">
 							<TodoSearch searchTodo={this.handleSearchTodo}/>
-							<TodoList todos={filteredTodos} onToggle={this.handleTodoToggle}/>
+							<TodoList/>
 							<TodoAdd addTodo={this.handleAddTodo}/>
 						</div>
 					</div>

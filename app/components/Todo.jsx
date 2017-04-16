@@ -1,16 +1,15 @@
 import React from 'react';
+import {connect} from 'react-redux';
+
 import moment from 'moment';
+import * as actions from 'actions';
+
 moment.locale('pt-BR');
 
-export default class Todo extends React.Component{
-
-	handleToggle = ()=>{
-		let id = this.props.id;
-		this.props.onToggle(id);
-	}
+export class Todo extends React.Component{
 
 	render(){
-		let {text, id, completed, createdAt, completedAt} = this.props;
+		let {text, id, completed, createdAt, completedAt, dispatch} = this.props;
 
 		let todoClassName = completed ? 'todo todo-completed' : 'todo';
 
@@ -22,7 +21,7 @@ export default class Todo extends React.Component{
 		};
 
 		return(
-			<div className={todoClassName} onClick={this.handleToggle}>
+			<div className={todoClassName} onClick={()=>{ dispatch(actions.toggleTodo(id))}}>
 				<div>
 					<input type="checkbox" checked={completed} readOnly/>
 				</div>
@@ -34,3 +33,5 @@ export default class Todo extends React.Component{
 		)
 	}
 }
+
+export default connect()(Todo) //expor default é o que o import irá reconhecer caso seja chamado : import Todo from 'Todos'

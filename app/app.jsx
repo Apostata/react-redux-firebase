@@ -1,13 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Route, Router, IndexRoute, hashHistory} from 'react-router';
+import {Provider} from 'react-redux';
 
 import TodoApp from 'TodoApp';
 
 import * as actions from 'actions';
-import * as configureStore from 'configureStore';
+import {configure} from 'configureStore';
 
-const store = configureStore.configure();
+const store = configure();
 
 store.subscribe(()=>{
 	console.log('New state', store.getState());
@@ -22,6 +23,8 @@ jQuery(document).foundation();
 import 'style!css!sass!aplicationStyles';
 
 ReactDOM.render(
-  <TodoApp/>,
+  <Provider store={store}>
+  	<TodoApp/>
+  </Provider>,
   document.getElementById('app')
 );
