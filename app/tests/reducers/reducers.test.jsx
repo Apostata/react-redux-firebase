@@ -25,4 +25,39 @@ describe('Redux Reducers',()=>{
 			expect(res).toEqual(true);
 		});
 	});
+
+	describe('todosReducer', ()=>{
+		it('Deve adicionar novo todo',()=>{
+			let action = {
+				type:'ADD_TODO',
+				text:'Novo Todo'
+			};
+
+			var res = reducers.todosReducer(df([]), df(action));
+			expect(res.length).toEqual(1);
+			expect(res[0].text).toEqual(action.text);
+		});
+
+		it('Deve alternar completed e completedAt',()=>{
+			let testTodo = [{
+				id: 1,
+				text: 'Teste todo',
+				completed: false,
+				createdAt: 123334,
+				completedAt: undefined
+
+			}];
+			
+			let action = {
+				type:'TOGGLE_TODO',
+				id:1
+			};
+
+			var res = reducers.todosReducer(df(testTodo), df(action));
+			expect(res.length).toEqual(1);
+			expect(res[0].completed).toEqual(true);
+			expect(res[0].completedAt).toExist();
+			expect(res[0].completedAt).toBeA('number');
+		});
+	});
 });
