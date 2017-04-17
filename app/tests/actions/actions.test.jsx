@@ -26,6 +26,26 @@ describe('Redux Actions', ()=>{
 		expect(res).toEqual(action);
 	});
 
+	it('Deve gerar a ação para addTodos',()=>{
+		let todos =[{
+			id:1,
+			text:'inicial',
+			completed: false,
+			completedAt: undefined,
+			createdAt: 33000
+		}];
+
+		
+		let action = {
+			type: 'ADD_TODOS',
+			todos
+		};
+
+		let res = actions.addTodos(todos);
+
+		expect(res).toEqual(action);
+	});
+
 	it('Deve gerar a ação para toggleShowCompleted',()=>{
 		let action = {
 			type: 'TOGGLE_SHOW_COMPLETED'

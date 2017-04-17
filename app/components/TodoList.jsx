@@ -3,9 +3,11 @@ import {connect} from 'react-redux';
 
 import Todo from 'Todo';
 
+import TodoApi from 'TodoApi';
+
 export class TodoList extends React.Component{
 	render(){
-		let {todos} = this.props;
+		let {todos, showCompleted, searchText} = this.props;
 
 		let renderTodos = ()=>{
 			if(todos.length === 0){
@@ -14,7 +16,7 @@ export class TodoList extends React.Component{
 				)
 			}
 
-			return todos.map((todo)=> <Todo key={todo.id} {...todo} />);
+			return TodoApi.filterTodos(todos, showCompleted, searchText).map((todo)=> <Todo key={todo.id} {...todo} />);
 		}
 
 		return(
@@ -27,8 +29,6 @@ export class TodoList extends React.Component{
 
 export default connect(
 	(state)=>{
-		return{
-			todos: state.todos
-		}
+		return state;
 	}
 )(TodoList);//conecta ao store e retorna apenas todos do state, passando todos para a props do TodoList.

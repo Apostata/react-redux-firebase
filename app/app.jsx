@@ -7,16 +7,19 @@ import TodoApp from 'TodoApp';
 
 import * as actions from 'actions';
 import {configure} from 'configureStore';
+import TodoApi from 'TodoApi';
 
 const store = configure();
 
 store.subscribe(()=>{
-	console.log('New state', store.getState());
+	let state = store.getState();
+	//console.log('New state', state);
+	TodoApi.setTodos(state.todos);
 });
 
-store.dispatch(actions.addTodo('Limpar o jardim'));
-store.dispatch(actions.setSearchText('Procurar por...'));
-store.dispatch(actions.toggleShowCompleted());
+let initialTodos = TodoApi.getTodos();
+store.dispatch(actions.addTodos(initialTodos));
+
 //load foundation
 
 jQuery(document).foundation();

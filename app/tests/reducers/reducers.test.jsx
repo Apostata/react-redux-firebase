@@ -59,5 +59,25 @@ describe('Redux Reducers',()=>{
 			expect(res[0].completedAt).toExist();
 			expect(res[0].completedAt).toBeA('number');
 		});
+
+		it('Deve adicionar todos existentes',()=>{
+			let todos =[{
+				id:1,
+				text:'inicial',
+				completed: false,
+				completedAt: undefined,
+				createdAt: 33000
+			}];
+
+			
+			let action = {
+				type: 'ADD_TODOS',
+				todos
+			};
+
+			var res = reducers.todosReducer(df([]), df(action));
+			expect(res.length).toEqual(1);
+			expect(res[0]).toEqual(todos[0]);
+		});
 	});
 });
