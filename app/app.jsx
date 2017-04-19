@@ -17,8 +17,8 @@ store.subscribe(()=>{
 	TodoApi.setTodos(state.todos);
 });
 
-let initialTodos = TodoApi.getTodos();
-store.dispatch(actions.addTodos(initialTodos));
+let initialTodos = TodoApi.getTodos();//pega do localStorage
+store.dispatch(actions.addTodos(initialTodos)); //passa para o redux
 
 //load foundation
 

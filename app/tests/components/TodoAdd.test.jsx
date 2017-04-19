@@ -6,6 +6,8 @@ import jQuery from 'jQuery';
 
 import {TodoAdd} from 'TodoAdd';
 
+import * as actions from 'actions';
+
 describe('TodoAdd', ()=>{
 	it('deve existir', ()=>{
 		expect(TodoAdd).toExist();
@@ -17,10 +19,7 @@ describe('TodoAdd', ()=>{
 		let $el = jQuery(ReactDOM.findDOMNode(todoAdd));
 
 		const todoText = 'Ver e-mails';
-		let action = {
-			type: "ADD_TODO",
-			text: todoText
-		};
+		let action = actions.startAddTodo(todoText);
 
 		todoAdd.refs.newTodo.value = todoText;
 		TestUtils.Simulate.submit($el.find('form')[0]);

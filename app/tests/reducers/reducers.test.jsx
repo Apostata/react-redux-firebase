@@ -28,14 +28,21 @@ describe('Redux Reducers',()=>{
 
 	describe('todosReducer', ()=>{
 		it('Deve adicionar novo todo',()=>{
+			let todo = {
+				id: '123fef',
+				text: 'Algo para fazer',
+				completed: false,
+				createdAt: 123545
+			};
+
 			let action = {
 				type:'ADD_TODO',
-				text:'Novo Todo'
+				todo
 			};
 
 			var res = reducers.todosReducer(df([]), df(action));
 			expect(res.length).toEqual(1);
-			expect(res[0].text).toEqual(action.text);
+			expect(res[0]).toEqual(action.todo);
 		});
 
 		it('Deve alternar completed e completedAt',()=>{

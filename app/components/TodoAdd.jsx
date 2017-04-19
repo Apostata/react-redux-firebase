@@ -10,7 +10,7 @@ export class TodoAdd extends React.Component{
 
 		if(addedTodo.length > 0){
 			this.refs.newTodo.value = '';
-			dispatch(actions.addTodo(addedTodo));
+			dispatch(actions.startAddTodo(addedTodo));
 		}
 		else{
 			this.refs.newTodo.focus();

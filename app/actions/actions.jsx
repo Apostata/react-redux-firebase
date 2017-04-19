@@ -1,3 +1,6 @@
+import firebase, {firebaseRef} from 'app/firebase';
+import moment from 'moment';
+
 export let setSearchText = (searchText) =>{
 	return{
 		type:'SET_SEARCH_TEXT',
@@ -11,10 +14,10 @@ export let toggleShowCompleted = ()=>{
 	}
 };
 
-export let addTodo = (text) =>{
+export let addTodo = (todo) =>{
 	return{
 		type:'ADD_TODO',
-		text
+		todo
 	}
 };
 
@@ -32,18 +35,23 @@ export let toggleTodo = (id) =>{
 	}
 };
 
-/*export default class Actions{
-	static setSearchText(searchText){
-		return{
-			type:'SET_SEARCH_TEXT',
-			searchText
-		}
-	}
+export var startAddTodo = (text)=>{//asyn put in database then pass action to redux
+	return(dispatch, getState) =>{
+		let todo = {
+			text,
+			completed: false,
+			createdAt:moment().unix(),
+			completedAt: null
+		};
+		let todoRef = firebaseRef.child('todos').push(todo);
 
-	static addTodo(text){
-		return{
-			type:'ADD_TODO',
-			text
-		}
+		return todoRef.then(()=>{
+			dispatch(addTodo({
+				...todo,
+				id: todoRef.key
+			}));
+		}).catch((e)=>{
+			console.log(e);
+		})
 	}
-}*/
+}
