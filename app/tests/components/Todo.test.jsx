@@ -6,13 +6,15 @@ import jQuery from 'jQuery';
 
 import {Todo} from 'Todo';
 
+import * as actions from 'actions';
+
 describe('Todo', ()=>{
 
 	it('Deve existir', ()=>{
 		expect(Todo).toExist();
 	});
 
-	it('Deve dispachar TOGGLE_TODO com id on click', ()=>{
+	it('Deve dispachar UPDATE_TODO com id on click', ()=>{
 		let todoData ={
 			id: 199,
 			text: "todo test",
@@ -21,13 +23,13 @@ describe('Todo', ()=>{
 
 		let spy = expect.createSpy();
 		let todo = TestUtils.renderIntoDocument(<Todo key={todoData.id} {...todoData} dispatch={spy}/>);
-		//$el[0]
 		let $el = jQuery(ReactDOM.findDOMNode(todo));
+
+		let action = actions.startUpdateTodo(todoData.id, !todoData.completed);
+
 		TestUtils.Simulate.click($el[0]);
-		expect(spy).toHaveBeenCalledWith({
-			type: 'TOGGLE_TODO',
-			id: todoData.id
-		});
+
+		expect(spy).toHaveBeenCalledWith(action);
 	});
 
 });

@@ -54,17 +54,24 @@ describe('Redux Reducers',()=>{
 				completedAt: undefined
 
 			}];
+
+			let updates = {
+				completed: true,
+				completedAt: 123654
+			}
 			
 			let action = {
-				type:'TOGGLE_TODO',
-				id:1
+				type:'UPDATE_TODO',
+				id:1,
+				updates
 			};
 
 			var res = reducers.todosReducer(df(testTodo), df(action));
 			expect(res.length).toEqual(1);
-			expect(res[0].completed).toEqual(true);
+			expect(res[0].completed).toEqual(updates.completed);
 			expect(res[0].completedAt).toExist();
-			expect(res[0].completedAt).toBeA('number');
+			expect(res[0].completedAt).toEqual(updates.completedAt);
+			expect(res[0].text).toEqual(testTodo[0].text);
 		});
 
 		it('Deve adicionar todos existentes',()=>{
