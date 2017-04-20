@@ -1,4 +1,4 @@
-import uuid from 'uuid';
+//import uuid from 'uuid';
 import moment from 'moment';
 
 export let searchTextReducer = (state = '', action) => {
