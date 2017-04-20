@@ -85,7 +85,7 @@ describe('Redux Reducers',()=>{
 
 			
 			let action = {
-				type: 'ADD_TODOS',
+				type: 'GET_TODOS',
 				todos
 			};
 

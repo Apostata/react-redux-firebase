@@ -10,6 +10,25 @@ import * as actions from 'actions';
 var createMockStore = configureMockStore([thunk]);
 
 describe('Redux Actions', ()=>{
+	let testTodoRef;
+
+	beforeEach((done)=>{
+		testTodoRef = firebaseRef.child('todos');
+		testTodoRef.remove().then(()=>{
+
+			testTodoRef.push().set({
+				text:'Something to do',
+				completed: false,
+				createdAt: 12342535
+			}).then(() => done())
+			.catch(done)
+		});
+	});
+
+	afterEach((done)=>{
+		testTodoRef.remove().then(()=>done());
+	});
+
 	it('Deve gerar a ação para searchText',()=>{
 		let action = {
 			type: 'SET_SEARCH_TEXT',
@@ -56,7 +75,7 @@ describe('Redux Actions', ()=>{
 		expect(res).toEqual(action);
 	});
 
-	it('Deve gerar a ação para addTodos',()=>{
+	it('Deve gerar a ação para getTodos',()=>{
 		let todos =[{
 			id:1,
 			text:'inicial',
@@ -67,11 +86,11 @@ describe('Redux Actions', ()=>{
 
 		
 		let action = {
-			type: 'ADD_TODOS',
+			type: 'GET_TODOS',
 			todos
 		};
 
-		let res = actions.addTodos(todos);
+		let res = actions.getTodos(todos);
 
 		expect(res).toEqual(action);
 	});
@@ -103,21 +122,7 @@ describe('Redux Actions', ()=>{
 	});
 
 	describe('Testes com o Firebase(BD)', ()=>{
-		let testTodoRef;
-
-		beforeEach((done)=>{
-			testTodoRef = firebaseRef.child('todos').push();
-			testTodoRef.set({
-				text:'Something to do',
-				completed: false,
-				createdAt: 12342535
-			}).then(() => done());
-		});
-
-		afterEach((done)=>{
-			testTodoRef.remove().then(()=>done());
-		});
-
+		
 		it('Deve alternar todos e dispachar ação UPDATE_TODO', (done)=>{
 			const store = createMockStore({});
 
@@ -136,9 +141,23 @@ describe('Redux Actions', ()=>{
 				expect(mockActions[0].updates.completedAt).toExist();
 				done();
 
-			}).catch((e)=>{
-				console.log(e);
-			});
+			}).catch(done());
+		});
+
+		it('Deve dispachar ação startGetTodos e verificar se GET_TODO é dispachado como resultado', (done)=>{
+			const store = createMockStore({});
+			const action = actions.startGetTodos(testTodoRef);
+			store.dispatch(action).then(()=>{
+				const mockActions = store.getActions();
+
+				expect(mockActions[0]).toInclude({
+					type: 'GET_TODOS',
+					todo:testTodoRef
+
+				});
+				done();
+
+			}).catch(done());
 		});
 	});
 });

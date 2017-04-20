@@ -11,14 +11,8 @@ import TodoApi from 'TodoApi';
 
 const store = configure();
 
-store.subscribe(()=>{
-	let state = store.getState();
-	//console.log('New state', state);
-	TodoApi.setTodos(state.todos);
-});
 
-let initialTodos = TodoApi.getTodos();//pega do localStorage
-store.dispatch(actions.addTodos(initialTodos)); //passa para o redux
+store.dispatch(actions.startGetTodos());
 
 //load foundation
 

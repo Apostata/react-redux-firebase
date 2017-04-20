@@ -16,7 +16,9 @@ export class TodoList extends React.Component{
 				)
 			}
 
-			return TodoApi.filterTodos(todos, showCompleted, searchText).map((todo)=> <Todo key={todo.id} {...todo} />);
+			let filteredTodo = TodoApi.filterTodos(todos, showCompleted, searchText);
+
+			return filteredTodo.length > 0 ? filteredTodo.map((todo)=> <Todo key={todo.id} {...todo} />) : <p className="container__message">Não há tarefas a serem realizdas :)</p>;
 		}
 
 		return(

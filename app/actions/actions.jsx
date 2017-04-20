@@ -21,9 +21,9 @@ export let addTodo = (todo) =>{
 	}
 };
 
-export let addTodos = (todos) =>{
+export let getTodos = (todos) =>{
 	return {
-		type: 'ADD_TODOS',
+		type: 'GET_TODOS',
 		todos
 	}
 };
@@ -35,6 +35,7 @@ export let updateTodo = (id, updates) =>{
 		updates
 	}
 };
+
 
 export let startAddTodo = (text)=>{//asyn put in database then pass action to redux
 	return(dispatch, getState) =>{
@@ -55,7 +56,7 @@ export let startAddTodo = (text)=>{//asyn put in database then pass action to re
 			console.log(e);
 		});
 	}
-}
+};
 
 export let startUpdateTodo = (id, completed) =>{
 	return(dispatch, getState) =>{
@@ -69,6 +70,27 @@ export let startUpdateTodo = (id, completed) =>{
 			dispatch(updateTodo(id, updates));
 		}).catch((e)=>{
 			console.log(e);
+		});
+	}
+};
+
+export let startGetTodos = ()=>{
+	return(dispatch, getState) => {
+		let todosRef = firebaseRef.child('todos');
+
+		return todosRef.once('value').then((snapshot)=>{
+			let firebaseTodos = snapshot.val() || {};
+			
+			let todos = [];
+
+			Object.keys(firebaseTodos).map((id, idx)=>{
+				
+				todos.push({
+					...firebaseTodos[id],
+					id
+				});
+			});
+			dispatch(getTodos(todos));
 		});
 	}
 }
