@@ -10,6 +10,9 @@
   },
   "author": "Andrew Mead",
   "license": "MIT",
+  "engines": {
+    "node": "7.0.0"
+  },
   "dependencies": {
     "axios": "^0.15.3",
     "express": "^4.13.4",
