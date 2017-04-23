@@ -97,7 +97,6 @@ export let startGetTodos = ()=>{
 
 export let startLogin =()=>{
 	return(dispatch, getState) =>{
-		console.log(firebase.auth());
 		return firebase.auth().signInWithPopup(githubProvider).then((result)=>{
 			console.log('auth worked',result);
 		}, (e)=>{
