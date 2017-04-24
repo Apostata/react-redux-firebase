@@ -10,25 +10,7 @@ import * as actions from 'actions';
 var createMockStore = configureMockStore([thunk]);
 
 describe('Redux Actions', ()=>{
-	let testTodoRef;
-
-	beforeEach((done)=>{
-		testTodoRef = firebaseRef.child('todos');
-		testTodoRef.remove().then(()=>{
-
-			testTodoRef.push().set({
-				text:'Something to do',
-				completed: false,
-				createdAt: 12342535
-			}).then(() => done())
-			.catch(done)
-		});
-	});
-
-	afterEach((done)=>{
-		testTodoRef.remove().then(()=>done());
-	});
-
+	
 	it('Deve gerar a ação para searchText',()=>{
 		let action = {
 			type: 'SET_SEARCH_TEXT',
@@ -40,21 +22,6 @@ describe('Redux Actions', ()=>{
 		expect(res).toEqual(action);
 	});
 
-	it('Deve criar um todo e dispachar ADD_TODO', (done)=>{
-		const store = createMockStore({});
-		const todoText = 'My todo item';
-
-		store.dispatch(actions.startAddTodo(todoText)).then(()=>{
-			const actions = store.getActions();
-			expect(actions[0]).toInclude({
-				type: 'ADD_TODO'
-			});
-			expect(actions[0].todo).toInclude({
-				text: todoText
-			});
-			done();
-		}).catch(done);
-	});
 
 	it('Deve gerar a ação para addTodo',()=>{
 
@@ -145,9 +112,36 @@ describe('Redux Actions', ()=>{
 	});
 
 	describe('Testes com o Firebase(BD)', ()=>{
-		
+		let testTodoRef;
+		let uid;
+		let todosRef;
+
+		beforeEach((done)=>{
+
+			firebase.auth().signInAnonymously()
+			.then((user)=>{
+				uid = user.uid;
+				todosRef = firebaseRef.child(`users/${uid}/todos`);
+				
+				return todosRef.remove();//returning a promise
+			}).then(()=>{
+				testTodoRef = todosRef.push();
+
+				return testTodoRef.set({
+					text: 'Alguma coisa para fazer',
+					completed: false,
+					createdAt: 12343434
+				});
+			}).then(()=>done())
+			.catch(done);			
+		});
+
+		afterEach((done)=>{
+			todosRef.remove().then(()=>done());
+		});
+
 		it('Deve alternar todos e dispachar ação UPDATE_TODO', (done)=>{
-			const store = createMockStore({});
+			const store = createMockStore({auth:{uid}});
 
 			const action = actions.startUpdateTodo(testTodoRef.key, true);
 			store.dispatch(action).then(()=>{
@@ -168,7 +162,7 @@ describe('Redux Actions', ()=>{
 		});
 
 		it('Deve dispachar ação startGetTodos e verificar se GET_TODO é dispachado como resultado', (done)=>{
-			const store = createMockStore({});
+			const store = createMockStore({auth:{uid}});
 			const action = actions.startGetTodos(testTodoRef);
 			store.dispatch(action).then(()=>{
 				const mockActions = store.getActions();
@@ -181,6 +175,22 @@ describe('Redux Actions', ()=>{
 				done();
 
 			}).catch(done());
+		});
+
+		it('Deve criar um todo e dispachar ADD_TODO', (done)=>{
+			const store = createMockStore({auth:{uid}});
+			const todoText = 'My todo item';
+
+			store.dispatch(actions.startAddTodo(todoText)).then(()=>{
+				const actions = store.getActions();
+				expect(actions[0]).toInclude({
+					type: 'ADD_TODO'
+				});
+				expect(actions[0].todo).toInclude({
+					text: todoText
+				});
+				done();
+			}).catch(done);
 		});
 	});
 });
