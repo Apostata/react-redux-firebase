@@ -45,6 +45,23 @@ describe('Redux Reducers',()=>{
 			expect(res[0]).toEqual(action.todo);
 		});
 
+		it('Deve limpar todos quando deslogar',()=>{
+			let todo = {
+				id: '123fef',
+				text: 'Algo para fazer',
+				completed: false,
+				createdAt: 123545
+			};
+
+			let action = {
+				type:'LOGOUT',
+				todo
+			};
+
+			var res = reducers.todosReducer(df([]), df(action));
+			expect(res.length).toEqual(0);
+		});
+
 		it('Deve alternar completed e completedAt',()=>{
 			let testTodo = [{
 				id: 1,
