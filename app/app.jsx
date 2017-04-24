@@ -13,6 +13,7 @@ const store = configure();
 firebase.auth().onAuthStateChanged((user)=>{
 	if(user){
 		store.dispatch(actions.login(user.uid));
+		store.dispatch(actions.startGetTodos());
 		hashHistory.push('/todoapp');
 	}
 	else{
@@ -21,9 +22,6 @@ firebase.auth().onAuthStateChanged((user)=>{
 	}
 })
 
-
-
-store.dispatch(actions.startGetTodos());
 
 //load foundation
 

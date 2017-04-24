@@ -9,7 +9,8 @@ import * as actions from 'actions';
  
 export class TodoApp extends React.Component{
 
-	onLogout = ()=>{
+	onLogout = (e)=>{
+		e.preventDefault();
 		let {dispatch} = this.props;
 		dispatch(actions.startLogout());
 	}
