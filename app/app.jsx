@@ -8,16 +8,19 @@ import {configure} from 'configureStore';
 import firebase from 'app/firebase';
 import router from 'app/router';
 
+const store = configure();
+
 firebase.auth().onAuthStateChanged((user)=>{
 	if(user){
+		store.dispatch(actions.login(user.uid));
 		hashHistory.push('/todoapp');
 	}
 	else{
+		store.dispatch(actions.logout());
 		hashHistory.push('/');
 	}
 })
 
-const store = configure();
 
 
 store.dispatch(actions.startGetTodos());

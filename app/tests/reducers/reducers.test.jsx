@@ -94,4 +94,30 @@ describe('Redux Reducers',()=>{
 			expect(res[0]).toEqual(todos[0]);
 		});
 	});
+
+	describe('authReducer', ()=>{
+		it('Deve retornar um uid no quando ação disparada for login',()=>{
+			let action = {
+				type:'LOGIN',
+				uid: 1234
+			};
+
+			var res = reducers.authReducer(df({}), df(action));
+			expect(res).toEqual({
+				uid: action.uid
+			});
+		});
+
+		it('Deve retornar um objeto vazio quando a ação disparada for logout',()=>{
+			const authData = {
+				uid: 8947
+			}
+			let action = {
+				type:'LOGOUT'
+			};
+
+			var res = reducers.authReducer(df(authData), df(action));
+			expect(res).toEqual({});
+		});
+	});
 });

@@ -121,6 +121,29 @@ describe('Redux Actions', ()=>{
 		expect(res).toEqual(action);
 	});
 
+	it('Deve gerar a ação para login',()=>{
+		
+		let action = {
+			type: 'LOGIN',
+			uid: 1234,
+		};
+
+		let res = actions.login(action.uid);
+
+		expect(res).toEqual(action);
+	});
+
+	it('Deve gerar a ação para logout',()=>{
+		
+		let action = {
+			type: 'LOGOUT'
+		};
+
+		let res = actions.logout();
+
+		expect(res).toEqual(action);
+	});
+
 	describe('Testes com o Firebase(BD)', ()=>{
 		
 		it('Deve alternar todos e dispachar ação UPDATE_TODO', (done)=>{

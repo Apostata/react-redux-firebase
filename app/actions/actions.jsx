@@ -98,7 +98,7 @@ export let startGetTodos = ()=>{
 export let startLogin =()=>{
 	return(dispatch, getState) =>{
 		return firebase.auth().signInWithPopup(githubProvider).then((result)=>{
-			console.log('auth worked',result);
+			console.log('auth worked');
 		}, (e)=>{
 			console.log('login error', e);
 		})
@@ -113,4 +113,18 @@ export let startLogout =()=>{
 			console.log('Failed to logout');
 		})
 	}
+};
+
+export let login =(uid)=>{
+	return{
+		type: 'LOGIN',
+		uid
+	}
+};
+
+export let logout =()=>{
+	return{
+		type: 'LOGOUT'
+	}
 }
+
